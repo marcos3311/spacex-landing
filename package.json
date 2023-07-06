@@ -1,0 +1,24 @@
+{
+  "name": "spacex-landing",
+  "description": "spacex landing page clone (not responsive)",
+  "keywords": [
+    "javascript",
+    "astro",
+    "tailwind",
+    "html"
+  ],
+  "author": "Marcos Bergatta (marcosbergatta@gmail.com)",
+  "license": "MIT",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^2.8.0"
+  }
+}
