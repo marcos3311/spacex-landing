@@ -1,0 +1,113 @@
+---
+import Logo from "./Logo.astro";
+
+---
+
+<header class="flex w-full bg-transparent px-[60px] fixed transition-all duration-700 z-20" id="main-header">
+    <div class="h-full flex-grow flex justify-end self-start py-7 transition-all duration-300">
+        <Logo/>
+    </div>
+
+    <nav class="self-center flex flex-grow py-9 transition-all duration-300">
+        <ul class="flex [&>li>a]:text-white [&>li>a]:font-bold [&>li>a]:text-sm [&>li]:px-4 whitespace-nowrap">
+            <li><a id="test" href="#">FALCON 9</a></li>
+            <li><a href="#">FALCON HEAVY</a></li>
+            <li><a href="#">DRAGON</a></li>
+            <li><a href="#">STARSHIP</a></li>
+            <li><a href="#">HUMAN SPACEFLIGHT</a></li>
+            <li><a href="#">RIDESHARE</a></li>
+            <li><a href="#">STARSHIELD</a></li>
+            <li><a href="#">STARLINK</a></li>
+            <span class="transition-[transform,_width] h-[1px] duration-300 hidden  absolute bottom-9 w-[0px] bg-white" id="underline"></span>
+        </ul>
+    </nav>
+    
+    <nav class="flex-grow flex justify-end py-9 transition-all duration-300">
+        <ul class="flex [&>li>a]:text-white [&>li>a]:font-bold [&>li>a]:text-sm [&>li]:px-4 items-center">
+            <li><a href="#">SHOP</a></li>
+            <li class="flex flex-col [&>span]:my-[1px]">
+                <span class="bg-white w-4 h-[2px]"></span>
+                <span class="bg-white w-4 h-[2px]"></span>
+                <span class="bg-white w-4 h-[2px]"></span>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<script>
+    const underline = document.querySelector('#underline');
+    const navElements = document.querySelectorAll('nav > ul > li > a');
+
+
+    navElements.forEach(elem => {
+        let elemPos = elem.getBoundingClientRect();
+        let underlinePos = underline.getBoundingClientRect();
+        
+        elem.addEventListener('mouseenter', () => {
+            elemPos = elem.getBoundingClientRect();
+            underlinePos = underline.getBoundingClientRect();
+
+            if (elemPos.left != underlinePos.left) {
+                underline.style.left = underlinePos.left + (elemPos.left - underlinePos.left) + "px";
+            }
+
+            underline.style.display = "block";
+            underline.style.width = elemPos.width + "px";
+        });
+
+        elem.addEventListener('mouseleave', () => {
+            underline.style.width = "0px";
+        });
+    })
+</script>
+
+<script>
+    const $header = document.querySelector('#main-header') as HTMLElement;
+    const $headerItems = document.querySelectorAll('#main-header>*');
+    var lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+        var scroll = document.documentElement.scrollTop;
+
+        if (scroll >= lastScroll) {
+            $headerItems.forEach(item => {
+                item.style.opacity = "0";
+            })
+            $header.style.top = "-11%"
+        } else {
+            $header.style.top = "0"
+            $headerItems.forEach(item => {
+                item.style.opacity = "1";
+            })
+        }
+
+        lastScroll = scroll;
+    })
+</script>
+
+<script>
+    const $header = document.querySelector('#main-header') as HTMLElement
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0
+    }
+
+    const observer = new IntersectionObserver(entries => {
+        console.log('asds')
+        entries.forEach(entry => {
+            const { isIntersecting } = entry;
+            console.log(entry.isIntersecting)
+            if (isIntersecting) {
+                $header.style.background = "none"
+            } else {
+                $header.style.background = "black"
+            }
+        })
+    }, observerOptions)
+
+    const $landing = document.querySelector('#landing');
+    observer.observe($landing);
+    console.log("saeb")
+</script>
